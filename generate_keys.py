@@ -41,8 +41,7 @@ def long_term_keys(p_length, secret_key_length):
 
 	# CALCOLO IL SEGRETO CONDIVISO
 
-	shared_lt=(long_term_public_key_B**long_term_secret_key_A) % long_term_p
-
+	shared_lt=hashlib.sha256(str((long_term_public_key_B**long_term_secret_key_A) % long_term_p).encode()).hexdigest()
 
 	return(long_term_secret_key_A,long_term_secret_key_B,long_term_public_key_A,long_term_public_key_B,shared_lt)
 
@@ -82,7 +81,6 @@ def ephimeral_keys(p_length, secret_key_length):
 
 	# CALCOLO IL SEGRETO CONDIVISO
 
-	shared_eph=(ephimeral_public_key_B**ephimeral_secret_key_A) % ephimeral_p
-
+	shared_eph=hashlib.sha256(str((ephimeral_public_key_B**ephimeral_secret_key_A) % ephimeral_p).encode()).hexdigest()
 
 	return(ephimeral_secret_key_A,ephimeral_secret_key_B,ephimeral_public_key_A,ephimeral_public_key_B,shared_eph)
