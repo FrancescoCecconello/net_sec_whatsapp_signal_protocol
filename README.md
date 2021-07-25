@@ -4,7 +4,7 @@ client.py e chat_server.py simulano una conversazione.
 
 1) Apri una finestra del terminale nella cartella e manda 
 
-python chat_server.py
+python server.py
 
 per avviare il server
 
