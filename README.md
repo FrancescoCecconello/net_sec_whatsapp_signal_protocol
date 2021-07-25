@@ -18,3 +18,5 @@ Nel terminale del server compaiono l'indirizzo IP del server e la porta associat
 Poi c'è anche da crittografare il messaggio e decodificarlo durante la fase di invio/ricezione. Sarebbe ottimo mostrare tutte le fasi di codifica prima dell'invio e di decodifica dopo la ricezione con qualche print.
 
 In pratica dobbiamo mettere la parte di generazione di tutte le chiavi pubbliche e private (+ shared secret) e la codifica/decodifica nel file client.py, che va a pescarsi le chiavi dell'altro client dal server
+
+Il file main serve solo per ricordarsi cosa c'è da fare più o meno, ma alla fine verrà cancellato
