@@ -22,3 +22,5 @@ In pratica dobbiamo mettere la parte di generazione di tutte le chiavi pubbliche
 Il file main serve solo per ricordarsi cosa c'è da fare più o meno, ma alla fine verrà cancellato
 
 Potrebbe essere un'idea creare un file explain_client.py nel quale fai vedere tutti i passaggi crittografici per lasciare pulita la conversazione sul terminale in cui esegui client.py
+
+Tecnicamente questa chat può avere anche più di 2 agenti, quindi è praticamente un gruppo
