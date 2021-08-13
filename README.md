@@ -1,4 +1,9 @@
-# network_security
+
+# IDEA
+
+Questo codice rappresenta una rudimentale implementazione dell'algoritmo X3DF utilizzato da WhatsApp e Signal per garantire la segretezza delle conversazioni. La comunicazione avviene attraverso due client collegati ad un server, posto all'indirizzo '127.0.0.1/8080' (localhost). 
+
+# UTILIZZO
 
 client.py e server.py simulano una conversazione.
 
@@ -12,15 +17,30 @@ per avviare il server
 
 python client.py
 
-in entrambe, scegliendo Alice e Bob come nickname.
+in entrambe, immettendo Alice e Bob come nickname (o i nickname che vuoi).
 
-Nel terminale del server compaiono l'indirizzo IP del server e la porta associata a ogni client, si può modificare il print in modo che stampi anche le chiavi pubbliche e private in chiaro o altre informazioni. Se guardi da pagina 57 in poi nel PDF c'è scritto che entrambi devono postare sul server le chiavi pubbliche (long-term e effimere), quindi bisogna modificare il codice in modo che il server memorizzi quelle chiavi (teoricamente l'ho già fatto).
-Poi c'è anche da crittografare il messaggio e decodificarlo durante la fase di invio/ricezione dal lato client. Sarebbe ottimo mostrare tutte le fasi di codifica prima dell'invio e di decodifica dopo la ricezione con qualche print.
+Il server si avvia silenziosamente, mentre entrambi i client comunicano l'apertura della chat e richiedono l'inserimento dei nickname.
+A questo punto è possibile per entrambi i client avviare una conversazione crittografata attraverso il server.
+Per chiudere i due client si deve ricorrere due volte al KeyboardInterrupt (CTRL + C) dal terminale per ognuno di essi; in questo caso, il lancio di eccezioni nei due terminali non comporterà alcun problema per quanto riguarda la riuscita della chat.
+Il server si spegnerà silenziosamente.
 
-In pratica dobbiamo mettere la parte di generazione di tutte le chiavi pubbliche e private (+ shared secret) e la codifica/decodifica nel file client.py, che va a pescarsi le chiavi pubbliche dell'altro client dal server
+# FILE GENERATI
 
-Il file main serve solo per ricordarsi cosa c'è da fare più o meno, ma alla fine verrà cancellato
+Vengono generati quattro file:
 
-Potrebbe essere un'idea creare un file explain_client.py nel quale fai vedere tutti i passaggi crittografici per lasciare pulita la conversazione sul terminale in cui esegui client.py
+1) 'chat.txt' è il file che contiene la chat dal punto di vista del frontend e contiene solamente i messaggi della conversazione, riportati con il formato [ora , mittente , messaggio].
+2) 'public_chat.txt' è il file che contiene la chat dal punto di vista di un agente esterno (attaccante) che controlli il movimento dei pacchetti tra i client e il server e che possa leggerne il contenuto (cifrato).
+3) 'secret_chat_<utente 1>.txt' e 'secret_chat_<utente 2>.txt' sono i file che contengono le chat dal punto di vista dei due utenti (<utente 1> e <utente 2>), in cui vengono riportate le chiavi segrete e i processi di decrittazione dei messaggi. 
 
-Tecnicamente questa chat può avere anche più di 2 agenti, quindi è praticamente un gruppo
+# POSSIBILI PROBLEMI
+
+1) L'implementazione tramite il modulo 'socket' di Python ha dei problemi noti alla radice, i quali non garantiscono sempre l'invio corretto dei dati e, di conseguenza, la loro corretta valutazione da parte del programma, generando possibilmente delle eccezioni.
+
+SOLUZIONE: Modificare la porta del socket del server in 'server.py' da 8080 ad un numero maggiore di 1024 e, conseguentemente, il numero di porta all'interno di 'client.py'. In seguito riavviare i programmi.
+
+2) La chiusura del processo 'server.py' durante l'esecuzione dei due programmi client comporterà un'eccezione all'interno dei due terminali client. 
+
+SOLUZIONE: Interrompere l'esecuzione di tutti i programmi coinvolti con KeyboardInterrupt (CTRL + C). Modificare la porta del socket del server in 'server.py' da 8080 ad un numero maggiore di 1024 e, conseguentemente, il numero di porta all'interno di 'client.py'. In seguito riavviare i programmi.
+
+
+
