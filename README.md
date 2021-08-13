@@ -1,7 +1,15 @@
 
 # IDEA
 
-Questo codice rappresenta una rudimentale implementazione dell'algoritmo X3DF utilizzato da WhatsApp e Signal per garantire la segretezza delle conversazioni. La comunicazione avviene attraverso due client collegati ad un server, posto all'indirizzo '127.0.0.1/8080' (localhost). 
+Questo codice rappresenta una rudimentale implementazione dell'algoritmo X3DF utilizzato da WhatsApp e Signal per garantire la segretezza delle conversazioni. La comunicazione avviene attraverso due client collegati ad un server, posto all'indirizzo '127.0.0.1/8080' (localhost, porta 8080). 
+
+# FILE PRESENTI
+
+1) 'server.py' genera un server, di default all'indirizzo '127.0.0.1/8080' (localhost, porta 8080). Il suo compito è trasmettere il numero primo condiviso p, il generatore condiviso g del gruppo Zp*, le chiavi pubbliche e i messaggi crittografati da un client all'altro.
+2) 'client.py' genera un client e lo collega al server. Il suo compito è generare le chiavi pubbliche e private e consentire lo scambio di messaggi con l'altro client.
+3) 'generate_prime' ritorna un numero primo di n bit. Genera un numero casuale di n bit e sfrutta il test di Rabin-Miller (complessità polinomiale) per verificarne la primalità.
+5) 'generator_finder' ritorna un generatore per il gruppo ciclico Zp*, dove p è il numero primo condiviso fra i client.
+6) 'generate_keys' contiene due funzioni, 'pub_priv_keys' e 'KDF'. La prima calcola le chiavi pubbliche e private di n bit per un client, mentre il secondo calcola il segreto condiviso tramite KDF (Key Derivation Function).
 
 # UTILIZZO
 
