@@ -3,6 +3,18 @@
 
 Questo codice rappresenta una rudimentale implementazione dell'algoritmo X3DF utilizzato da WhatsApp e Signal per garantire la segretezza delle conversazioni. La comunicazione avviene attraverso due client collegati ad un server, posto all'indirizzo '127.0.0.1/8080' (localhost, porta 8080). 
 
+# PRIMA DI INIZIARE
+
+Verifica di avere installato il modulo 'pycryptodome'. In tal caso, disinstallalo e reinstallalo con i seguenti comandi:
+
+pip uninstall pycryptodome
+pip install pycryptodome
+
+Altrimenti, esegui solamente:
+
+pip install pycryptodome
+
+Il modulo 'Crypto' all'interno dei file farà riferimento a 'pycryptodome' e non più al modulo 'Crypto' (deprecato).
 # FILE PRESENTI
 
 1) 'server.py' genera un server, di default all'indirizzo '127.0.0.1/8080' (localhost, porta 8080). Il suo compito è trasmettere il numero primo condiviso p, il generatore condiviso g del gruppo Zp*, le chiavi pubbliche e i messaggi crittografati da un client all'altro.
@@ -40,7 +52,7 @@ Vengono generati quattro file:
 2) 'public_chat.txt' è il file che contiene la chat dal punto di vista di un agente esterno (attaccante) che controlli il movimento dei pacchetti tra i client e il server e che possa leggerne il contenuto (cifrato).
 3) 'secret_chat_<utente 1>.txt' e 'secret_chat_<utente 2>.txt' sono i file che contengono le chat dal punto di vista dei due utenti (<utente 1> e <utente 2>), in cui vengono riportate le chiavi segrete e i processi di decrittazione dei messaggi. 
 
-# POSSIBILI PROBLEMI
+# POSSIBILI PROBLEMI (riscontrati su Ubuntu 20.04)
 
 1) L'implementazione tramite il modulo 'socket' di Python ha dei problemi noti alla radice, i quali non garantiscono sempre l'invio corretto dei dati e, di conseguenza, la loro corretta valutazione da parte del programma, generando possibilmente delle eccezioni.
 
