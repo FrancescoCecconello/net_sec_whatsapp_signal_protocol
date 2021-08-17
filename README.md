@@ -6,14 +6,17 @@ Questo codice rappresenta una rudimentale implementazione dell'algoritmo X3DF ut
 # PRIMA DI INIZIARE
 
 Verifica di avere installato il modulo 'pycryptodome'. In tal caso, disinstallalo e reinstallalo con i seguenti comandi:
-
+```
 pip uninstall pycryptodome
 pip install pycryptodome
 
-Altrimenti, esegui solamente:
+```
 
+Altrimenti, esegui solamente:
+```
 pip install pycryptodome
 
+```
 Il modulo 'Crypto' all'interno dei file farà riferimento a 'pycryptodome' e non più al modulo 'Crypto' (deprecato).
 # FILE PRESENTI
 
