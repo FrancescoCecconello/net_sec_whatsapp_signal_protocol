@@ -23,7 +23,8 @@ Se, invece, ***pycryptodome*** non è installato, esegui:
 pip install pycryptodome
 
 ```
-Il modulo ***Crypto*** all'interno dei file farà riferimento a ***pycryptodome*** e non più al modulo ***Crypto*** (deprecato).
+Il modulo ***Crypto*** all'interno dei file farà riferimento a ***pycryptodome*** e non più al modulo ***Crypto*** (deprecato).\nCiao
+
 
 # FILE PRESENTI
 
