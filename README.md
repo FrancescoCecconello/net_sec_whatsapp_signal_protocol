@@ -8,6 +8,7 @@ Questo codice rappresenta una rudimentale implementazione dell'algoritmo X3DF ut
 Verifica di avere installato il modulo 'pycryptodome'. In tal caso, disinstallalo e reinstallalo con i seguenti comandi:
 ```
 pip uninstall pycryptodome
+
 pip install pycryptodome
 
 ```
@@ -30,15 +31,19 @@ Il modulo 'Crypto' all'interno dei file farà riferimento a 'pycryptodome' e non
 
 client.py e server.py simulano una conversazione.
 
-1) Apri una finestra del terminale nella cartella e manda 
-
+1) Apri una finestra del terminale nella cartella ed esegui 
+```
 python server.py
+
+```
 
 per avviare il server
 
 2) Apri altre due terminali nella cartella e manda
-
+```
 python client.py
+
+```
 
 in entrambe, immettendo Alice e Bob come nickname (o i nickname che vuoi).
 
