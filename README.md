@@ -5,20 +5,26 @@ Questo codice rappresenta una rudimentale implementazione dell'algoritmo X3DF ut
 
 # PRIMA DI INIZIARE
 
-Verifica di avere installato il modulo 'pycryptodome'. In tal caso, disinstallalo e reinstallalo con i seguenti comandi:
+Verifica di avere installato il modulo ***pycryptodome***. Apri un terminale Python ed esegui
 ```
-pip uninstall pycryptodome
+import Crypto
 
+print(Crypto.__version__)
+
+```
+La versione più recente disponibile durante la scrittura di questo readme è la 3.10.1, ma in futuro potrebbe essere aggiornata. Se hai già installato ***pycryptodome*** e vuoi aggiornarlo, esegui:
+```
+pip install pycryptodome -U
+
+```
+
+Se, invece, ***pycryptodome*** non è installato, esegui:
+```
 pip install pycryptodome
 
 ```
+Il modulo ***Crypto*** all'interno dei file farà riferimento a ***pycryptodome*** e non più al modulo ***Crypto*** (deprecato).
 
-Altrimenti, esegui solamente:
-```
-pip install pycryptodome
-
-```
-Il modulo 'Crypto' all'interno dei file farà riferimento a 'pycryptodome' e non più al modulo 'Crypto' (deprecato).
 # FILE PRESENTI
 
 1) 'server.py' genera un server, di default all'indirizzo '127.0.0.1/8080' (localhost, porta 8080). Il suo compito è trasmettere il numero primo condiviso p, il generatore condiviso g del gruppo Zp*, le chiavi pubbliche e i messaggi crittografati da un client all'altro.
