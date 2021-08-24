@@ -77,7 +77,7 @@ pip install colorama
 
 # UTILIZZO
 
-***client.py*** e ****server.py*** simulano una conversazione.
+***client.py*** e ***server.py*** simulano una conversazione.
 
 1) Apri una finestra del terminale nella cartella ed esegui 
 ```
