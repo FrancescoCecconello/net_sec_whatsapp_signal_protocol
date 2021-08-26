@@ -111,7 +111,7 @@ Vengono generati quattro file:
 
 # POSSIBILI PROBLEMI (riscontrati su Ubuntu 20.04)
 
-1) L'implementazione tramite il modulo ***socket*** di Python ha dei problemi noti alla radice, i quali non garantiscono sempre l'invio corretto dei dati e, di conseguenza, la loro corretta valutazione da parte del programma, generando possibilmente delle eccezioni.
+1) L'implementazione tramite il modulo ***socket*** di Python ha dei problemi noti con Ubuntu, i quali non garantiscono sempre l'invio corretto dei dati e, di conseguenza, la loro corretta valutazione da parte del programma, generando possibilmente delle eccezioni.
 
 SOLUZIONE: Modificare la porta del socket del server in ***server.py*** da 8080 ad un numero maggiore di 1024 e, conseguentemente, il numero di porta all'interno di ***client.py***. In seguito riavviare i programmi.
 
