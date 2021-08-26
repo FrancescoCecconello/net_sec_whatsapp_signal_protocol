@@ -1,7 +1,7 @@
 
 # IDEA
 
-Questo codice rappresenta una rudimentale implementazione dell'algoritmo X3DF utilizzato da WhatsApp e Signal per garantire la segretezza delle conversazioni. La comunicazione avviene attraverso due client collegati ad un server, posto all'indirizzo '127.0.0.1/8080' (localhost, porta 8080). 
+Questo codice rappresenta una rudimentale implementazione dell'algoritmo X3DH utilizzato da WhatsApp e Signal per garantire la segretezza delle conversazioni. La comunicazione avviene attraverso due client collegati ad un server, posto all'indirizzo '127.0.0.1/8080' (localhost, porta 8080). 
 
 # PRIMA DI INIZIARE
 ## PYCRYPTODOME
