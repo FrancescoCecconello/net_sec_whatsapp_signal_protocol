@@ -74,6 +74,7 @@ pip install colorama
 3) ***generate_prime*** ritorna un numero primo di n bit. Genera un numero casuale di n bit e sfrutta il test di Rabin-Miller (complessità polinomiale) per verificarne la primalità.
 5) ***generator_finder*** ritorna un generatore per il gruppo ciclico Zp*, dove p è il numero primo condiviso fra i client.
 6) ***generate_keys*** contiene due funzioni, *pub_priv_keys* e *KDF*. La prima calcola le chiavi pubbliche e private di n bit per un client, mentre il secondo calcola il segreto condiviso tramite KDF (Key Derivation Function).
+7) ***nice_text.py*** serve per centrare e incorniciare i titoli delle chat.
 
 # UTILIZZO
 
