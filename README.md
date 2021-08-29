@@ -1,7 +1,8 @@
 
 # IDEA
 
-Questo codice rappresenta una rudimentale implementazione dell'algoritmo X3DH utilizzato da WhatsApp e Signal per garantire la segretezza delle conversazioni. La comunicazione avviene attraverso due client collegati ad un server, posto all'indirizzo '127.0.0.1/8080' (localhost, porta 8080). 
+Questo codice rappresenta una rudimentale implementazione dell'algoritmo X3DH utilizzato da WhatsApp e Signal per garantire la segretezza delle conversazioni. La comunicazione avviene attraverso due client collegati ad un server, posto all'indirizzo '127.0.0.1/8080' (localhost, porta 8080). L'ellittica utilizzata per la generazione delle chiavi segrete e delle chiavi pubbliche è CurveX25519, la quale fornisce chiavi da 256 bit.
+In questa implementazione non è previsto l'handshake iniziale con cui Alice e Bob verificano le proprie identità.
 
 # PRIMA DI INIZIARE
 ## PYCRYPTODOME
