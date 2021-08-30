@@ -1,8 +1,7 @@
 
 # IDEA
 
-Questo codice rappresenta una rudimentale implementazione dell'algoritmo X3DH utilizzato da WhatsApp e Signal per garantire la segretezza delle conversazioni. La comunicazione avviene attraverso due client collegati ad un server, posto all'indirizzo '127.0.0.1/8080' (localhost, porta 8080). L'ellittica utilizzata per la generazione delle chiavi segrete e delle chiavi pubbliche è CurveX25519, la quale fornisce chiavi da 256 bit.
-In questa implementazione non è previsto l'handshake iniziale con cui Alice e Bob verificano le proprie identità.
+Questo codice rappresenta una rudimentale implementazione dell'algoritmo X3DH utilizzato da WhatsApp e Signal per garantire la segretezza delle conversazioni. La comunicazione avviene attraverso due client collegati ad un server, posto all'indirizzo '127.0.0.1/8080' (localhost, porta 8080). L'ellittica utilizzata per la generazione delle chiavi segrete e delle chiavi pubbliche è CurveX25519, la quale fornisce chiavi da 256 bit, mentre l'algoritmo per firmare e autenticare le chiavi pubbliche dei client è EdDSA, basato sempre sulla curva X25519.
 
 # PRIMA DI INIZIARE
 ## PYCRYPTODOME
@@ -71,7 +70,7 @@ pip install colorama
 
 1) ***server.py*** genera un server, di default all'indirizzo '127.0.0.1/8080' (localhost, porta 8080). Il suo compito è memorizzare e trasmettere le chiavi pubbliche e i messaggi crittografati da un client all'altro.
 2) ***client.py*** genera un client e lo collega al server. Il suo compito è generare le chiavi pubbliche e private e consentire lo scambio di messaggi con l'altro client.
-6) ***generate_keys*** contiene la funzione *KDF*, la quale calcola il segreto condiviso tramite KDF (Key Derivation Function).
+6) ***generate_keys*** contiene la funzione *concat_KDF*, la quale calcola il segreto condiviso tramite KDF (Key Derivation Function).
 7) ***nice_text.py*** serve per centrare e incorniciare i titoli delle chat.
 
 # UTILIZZO
