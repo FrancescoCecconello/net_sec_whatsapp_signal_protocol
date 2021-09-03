@@ -1,4 +1,4 @@
-def center(text, space_from_edges): #frame_len è il numero di cancelletti della cornice, space_from_edges è lo spazio minimo fra il testo e i bordi della cornice
+def center(text, space_from_edges): 
 	third_line = '##'
 	for _ in range(space_from_edges):
 		third_line += ' '
