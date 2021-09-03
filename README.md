@@ -30,7 +30,7 @@ python server.py
 
 per avviare il server
 
-2) Apri altre due terminali nella cartella e manda
+2) Apri altre due terminali nella cartella ed esegui
 ```
 python client.py
 
