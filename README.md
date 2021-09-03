@@ -4,65 +4,10 @@
 Questo codice rappresenta una rudimentale implementazione dell'algoritmo X3DH utilizzato da WhatsApp e Signal per garantire la segretezza delle conversazioni. La comunicazione avviene attraverso due client collegati ad un server, posto all'indirizzo '127.0.0.1/8080' (localhost, porta 8080). L'ellittica utilizzata per la generazione delle chiavi segrete e delle chiavi pubbliche è CurveX25519, la quale fornisce chiavi da 256 bit, mentre l'algoritmo per firmare e autenticare le chiavi pubbliche dei client è EdDSA, basato sempre sulla curva X25519.
 
 # PRIMA DI INIZIARE
-## PYCRYPTODOME
 
-Verifica di avere installato il modulo ***pycryptodome***. Apri un terminale Python ed esegui
+Installa i pacchetti richiesti spostandoti nella cartella contente il file *requirements.txt* ed esegui
 ```
-import Crypto
-
-print(Crypto.__version__)
-
-```
-La versione più recente disponibile durante la scrittura di questo readme è la 3.10.1, ma in futuro potrebbe essere aggiornata. Se hai già installato ***pycryptodome*** e vuoi aggiornarlo, esegui:
-```
-pip install pycryptodome -U
-
-```
-
-Se, invece, ***pycryptodome*** non è installato, esegui:
-```
-pip install pycryptodome
-
-```
-Il modulo ***Crypto*** all'interno dei file farà riferimento a ***pycryptodome*** e non più al modulo ***Crypto*** (deprecato).
-
-## CRYPTOGRAPHY
-Verifica di avere installato il modulo ***cryptography***. Apri un terminale Python ed esegui
-```
-import cryptography
-
-print(cryptography.__version__)
-
-```
-La versione più recente disponibile durante la scrittura di questo readme è la 3.4.7, ma in futuro potrebbe essere aggiornata. Se hai già installato ***cryptography*** e vuoi aggiornarlo, esegui:
-```
-pip install cryptography -U
-
-```
-
-Se, invece, ***cryptography*** non è installato, esegui:
-```
-pip install cryptography
-
-```
-
-## COLORAMA
-Verifica di avere installato il modulo ***colorama***. Apri un terminale Python ed esegui
-```
-import colorama
-
-print(colorama.__version__)
-
-```
-La versione più recente disponibile durante la scrittura di questo readme è la 0.4.4, ma in futuro potrebbe essere aggiornata. Se hai già installato ***colorama*** e vuoi aggiornarlo, esegui:
-```
-pip install colorama -U
-
-```
-
-Se, invece, ***colorama*** non è installato, esegui:
-```
-pip install colorama
+pip install -r requirements.txt
 
 ```
 
