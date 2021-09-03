@@ -5,7 +5,7 @@ Questo codice rappresenta una rudimentale implementazione dell'algoritmo X3DH ut
 
 # PRIMA DI INIZIARE
 
-Installa i pacchetti richiesti spostandoti nella cartella contente il file *requirements.txt* ed esegui
+Installa i pacchetti richiesti spostandoti nella cartella contenente il file *requirements.txt* ed esegui
 ```
 pip install -r requirements.txt
 
