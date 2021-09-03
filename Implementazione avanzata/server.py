@@ -35,7 +35,6 @@ try:
 		s_chat.write(center(text,20))
 		s_chat.close()
 	
-
 	# Richiedo le chiavi pubbliche ai client
 	clients[0].sendall(str(["REQKEYS"]).encode('utf-8'))
 	clients[1].sendall(str(["REQKEYS"]).encode('utf-8'))
