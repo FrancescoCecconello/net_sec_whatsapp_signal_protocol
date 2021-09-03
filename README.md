@@ -10,13 +10,19 @@ Installa i pacchetti richiesti spostandoti nella cartella contenente il file *re
 pip install -r requirements.txt
 
 ```
-
-# FILE PRESENTI
+# FILE PRESENTI IN *** IMPLEMENTAZIONE BASE ***
 
 1) ***server.py*** genera un server, di default all'indirizzo '127.0.0.1/8080' (localhost, porta 8080). Il suo compito è memorizzare e trasmettere le chiavi pubbliche e i messaggi crittografati da un client all'altro.
 2) ***client.py*** genera un client e lo collega al server. Il suo compito è generare le chiavi pubbliche e private e consentire lo scambio di messaggi con l'altro client.
 6) ***generate_keys*** contiene la funzione *concat_KDF*, la quale calcola il segreto condiviso tramite KDF (Key Derivation Function).
 7) ***nice_text.py*** serve per centrare e incorniciare i titoli delle chat.
+
+# FILE PRESENTI IN *** IMPLEMENTAZIONE AVANZATA ***
+
+1) ***server.py*** genera un server, di default all'indirizzo '127.0.0.1/8080' (localhost, porta 8080). Il suo compito è memorizzare e trasmettere le chiavi pubbliche e i messaggi crittografati da un client all'altro.
+2) ***client.py*** genera un client e lo collega al server. Il suo compito è generare le chiavi pubbliche e private e consentire lo scambio di messaggi con l'altro client.
+3) ***generate_keys*** contiene la funzione *concat_KDF*, la quale calcola il segreto condiviso tramite KDF (Key Derivation Function).
+4) ***nice_text.py*** serve per centrare e incorniciare i titoli delle chat.
 
 # UTILIZZO
 
