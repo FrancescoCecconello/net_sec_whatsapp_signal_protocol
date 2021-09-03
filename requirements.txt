@@ -1,4 +1,4 @@
-###### VERSIONI UTILIZZATE PER QUESTO PROGETTO ######
+##### VERSIONI UTILIZZATE PER QUESTO PROGETTO #####
 
 pycryptodome == 3.10.1
 cryptography == 3.4.7
