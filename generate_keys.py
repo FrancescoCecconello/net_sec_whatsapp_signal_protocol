@@ -3,8 +3,6 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.concatkdf import ConcatKDFHMAC
 from cryptography.hazmat.backends import default_backend
 
-
-
 def concat_KDF(key1, key2, key3):
     # GENERO IL SEGRETO CONDIVISO
 
