@@ -100,12 +100,7 @@ try:
 		        else:
 		            data = eval(data)
 		            client.sendall(str(data).encode('utf-8'))
-		            
-		            
-		            
-		        
-
-
+				
 	class inoltroToFirst(threading.Thread):
 		def __init__(self):
 		    threading.Thread.__init__(self)
