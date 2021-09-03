@@ -1,7 +1,9 @@
 
 # IDEA
 
-Questo codice rappresenta una rudimentale implementazione dell'algoritmo X3DH utilizzato da WhatsApp e Signal per garantire la segretezza delle conversazioni. La comunicazione avviene attraverso due client collegati ad un server, posto all'indirizzo '127.0.0.1/8080' (localhost, porta 8080). L'ellittica utilizzata per la generazione delle chiavi segrete e delle chiavi pubbliche è CurveX25519, la quale fornisce chiavi da 256 bit, mentre l'algoritmo per firmare e autenticare le chiavi pubbliche dei client è EdDSA, basato sempre sulla curva X25519.
+Questo codice rappresenta una rudimentale implementazione dell'algoritmo X3DH utilizzato da WhatsApp e Signal per garantire la segretezza delle conversazioni. La comunicazione avviene attraverso due client collegati ad un server, posto all'indirizzo '127.0.0.1/8080' (localhost, porta 8080). 
+Nel caso dell'implementazione base non è prevista la signature delle chiavi, ma semplicemente lo scambio tramite Diffie-Hellman.
+Per l'implementazione avanzata, invece, l'ellittica utilizzata per la generazione delle chiavi segrete e delle chiavi pubbliche è CurveX25519, la quale fornisce chiavi da 256 bit, mentre l'algoritmo per firmare e autenticare le chiavi pubbliche dei client è EdDSA, basato sempre sulla curva X25519.
 
 # PRIMA DI INIZIARE
 
