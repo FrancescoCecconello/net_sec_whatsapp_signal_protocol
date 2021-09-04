@@ -18,7 +18,7 @@ pip install -r requirements.txt
 2) ***client.py*** genera un client e lo collega al server. Il suo compito è generare le chiavi pubbliche e private e consentire lo scambio di messaggi con l'altro client.
 3) ***generate_keys*** calcola le chiavi pubbliche e private, le shared key e il segreto condiviso.
 4) ***generate_prime*** genera un numero primo di *n* bit (basato sul test di Rabin-Miller).
-5) ***generator finder*** calcola un generatore per il gruppo Zp*.
+5) ***generator_finder*** calcola un generatore per il gruppo Zp*.
 6) ***nice_text*** serve per centrare e incorniciare i titoli delle chat.
 
 # FILE PRESENTI IN 'IMPLEMENTAZIONE AVANZATA'
