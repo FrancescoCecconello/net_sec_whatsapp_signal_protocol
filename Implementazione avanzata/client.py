@@ -2,7 +2,7 @@ import socket, threading, os
 import sys
 from colorama import init, Fore
 from generate_keys import concat_KDF
-from Crypto.Cipher import AES
+from Cryptodome.Cipher import AES
 from datetime import datetime
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import x25519
