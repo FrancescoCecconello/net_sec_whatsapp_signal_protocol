@@ -1,10 +1,12 @@
+import sys
 import socket, threading, os
+import ast
+from Crypto.Cipher import AES
 from colorama import init, Fore
+from datetime import datetime
+
 from generate_keys import *
 from generate_prime import *
-from Crypto.Cipher import AES
-import sys
-from datetime import datetime
 
 try:
 	init()
@@ -43,7 +45,7 @@ try:
 		    while True:
 		        from_server = client.recv(16777216).decode()
 		        try:
-		            from_server = eval(from_server) # trasformazione della stringa in una lista
+		            from_server = ast.literal_eval(from_server) # trasformazione della stringa in una lista
 		        except TypeError:
 		            print('C\'è stato un problema durante la valutazione dei dati provenienti dal server. Per ulteriori informazioni consultare il file README. Termina la chat in entrambi i terminali client con KeyboardInterrupt (CTRL+C).')
 		            sys.exit(0)
@@ -119,7 +121,6 @@ try:
 		                s_chat.write(nickname + ' ha ricevuto le chiavi pubbliche di ' + nicknames[1] + ' e può calcolare il segreto condiviso:\n' + str(message_key) + '\n\n')
 		                s_chat.write(nickname + ' ha cancellato la chiave segreta effimera ' + str(ep_secret_key) + '.\n\n')
 		                del ep_secret_key
-		                print(ep_secret_key)
 		                s_chat.close()
 		            else:
 		                secret_chat2 = 'secret_chat_' + nickname +'.txt'

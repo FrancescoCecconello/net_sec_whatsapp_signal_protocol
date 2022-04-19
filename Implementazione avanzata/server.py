@@ -1,13 +1,16 @@
+import sys
 import socket, threading
 import time
-import sys
-from socket import error as SocketError
 import errno
+import ast
+
+from socket import error as SocketError
+
 from nice_text import center
 
 try:
 	p_chat = open('public_chat.txt','w')
-	p_chat.write(center('Questo file contiene la trascrizione della chat tra Alice e Bob dal punto di vista di un agente esterno.',20))
+	p_chat.write(center('Questo file contiene la trascrizione della chat tra i due utenti dal punto di vista di un agente esterno.',20))
 	p_chat.close()
 	chat = open('chat.txt','w')
 	chat.write(center('Questo file contiene la trascrizione della chat in chiaro e rappresenta il front-end.',20))
@@ -97,7 +100,7 @@ try:
 		            s_chat_B.close()
 		            sys.exit(0)		            
 		        else:
-		            data = eval(data)
+		            data = ast.literal_eval(data)
 		            client.sendall(str(data).encode('utf-8'))
 				
 	class inoltroToFirst(threading.Thread):
@@ -119,7 +122,7 @@ try:
 		        if not data:
 		            sys.exit(0)		            
 		        else:    
-		            data = eval(data)
+		            data = ast.literal_eval(data)
 		            client.sendall(str(data).encode('utf-8'))
 		            
 	# Thread per ricevere e inoltrare i messaggi	                              
