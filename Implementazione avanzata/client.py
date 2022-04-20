@@ -1,7 +1,5 @@
-import sys
 import socket, threading, os
-import ast
-
+import sys
 from colorama import init, Fore
 from generate_keys import concat_KDF
 from Cryptodome.Cipher import AES
@@ -49,9 +47,8 @@ try:
 		try:
 			while True:
 				from_server = client.recv(16777216).decode()
-				print(from_server)
 				try:
-					from_server = ast.literal_eval(from_server) # trasformo la stringa in una lista
+					from_server = eval(from_server) # trasformo la stringa in una lista
 				except TypeError:
 					print(Fore.RED + 'C\'è stato un problema durante la valutazione dei dati provenienti dal server. Per ulteriori informazioni consultare il file README. Termina la chat in entrambi i terminali client con KeyboardInterrupt (CTRL+C).')
 					sys.exit(0)

@@ -1,12 +1,9 @@
 import socket, threading
-import time
-import errno
-import ast
-from socket import error as SocketError
-
-
 from generate_keys import *
 from generate_prime import *
+import time
+from socket import error as SocketError
+import errno
 
 try:
 	p_chat = open('public_chat.txt','w')
@@ -124,7 +121,7 @@ try:
 		            s_chat_B.close()
 		            sys.exit(0)		            
 		        else:
-		            data = ast.literal_eval(data)
+		            data = eval(data)
 		            client.sendall(str(data).encode('utf-8'))
 		            
 		            
@@ -150,7 +147,7 @@ try:
 		        if not data:
 		            sys.exit(0)		            
 		        else:    
-		            data = ast.literal_eval(data)
+		            data = eval(data)
 		            client.sendall(str(data).encode('utf-8'))
 		            
 		                              
