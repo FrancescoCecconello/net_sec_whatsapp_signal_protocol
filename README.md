@@ -61,6 +61,32 @@ Vengono generati quattro file:
 2) *public_chat.txt* è il file che contiene la chat dal punto di vista di un agente esterno (attaccante) che controlli il movimento dei pacchetti tra i client e il server e che possa leggerne il contenuto (cifrato).
 3) *secret_chat_<utente 1>.txt* e *secret_chat_<utente 2>.txt* sono i file che contengono le chat dal punto di vista dei due utenti (<utente 1> e <utente 2>), in cui vengono riportate le chiavi segrete e i processi di decrittazione dei messaggi. 
 
+
+# DIRECTORY GUI
+
+In entrambe le directory GUI_* è contenuto il codice per simulare una chat fra i due utenti, i cui messaggi vengono cifrati con gli stessi metodi dell'implementazione base e dell'implementazione avanzata. Per avviare la GUI basta eseguire i seguenti passaggi:
+
+1) Aprire due finestre del terminale nella cartella GUI ed esegui il primo comando in una finestra e poi il secondo comando nell'altra:
+```
+python client_1.py plain
+
+python client_2.py plain
+
+```
+
+se si vuole vedere la chat in chiaro, mentre se ci si vuole mettere nei panni di un attaccante che intercetta i messaggi, si esegue come prima
+```
+python client_1.py ciphered
+
+python client_2.py ciphered
+
+```
+
+2) Inserire i nickname dei due utenti, poi si può iniziare a digitare nelle box delle due finestre. Una finestra sarà la chat dal punto di vista del primo utente, mentre l'altra sarà la chat dal punto di vista del secondo utente.
+3) Per chiudere la conversazione è sufficiente uscire dalle due finestre.
+
+
+
 # POSSIBILI PROBLEMI (riscontrati su Ubuntu 20.04)
 
 1) L'implementazione tramite il modulo ***socket*** di Python ha dei problemi noti con Ubuntu, i quali non garantiscono sempre l'invio corretto dei dati e, di conseguenza, la loro corretta valutazione da parte del programma, generando possibilmente delle eccezioni.
@@ -70,6 +96,5 @@ SOLUZIONE: Modificare la porta del socket del server in ***server.py*** da 8080 
 2) La chiusura del processo ***server.py*** durante l'esecuzione dei due programmi client comporterà un'eccezione all'interno dei due terminali client. 
 
 SOLUZIONE: Interrompere l'esecuzione di tutti i programmi coinvolti con KeyboardInterrupt (**CTRL + C**). Modificare la porta del socket del server in ***server.py*** da 8080 ad un numero maggiore di 1024 e, conseguentemente, il numero di porta all'interno di ***client.py***. In seguito riavviare i programmi.
-
 
 
