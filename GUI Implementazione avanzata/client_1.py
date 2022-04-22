@@ -12,6 +12,7 @@ from cryptography.hazmat.primitives.asymmetric import ed25519
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 from cryptography.exceptions import InvalidSignature
 
+# scelgo se leggere i messaggi in chiaro o cifrati
 global mode
 if sys.argv[1] == "plain":
     mode = "plain"
@@ -20,7 +21,8 @@ elif sys.argv[1] == "ciphered":
 else:
     print("Mode must be 'plain' or 'chipered'. Exiting")
     exit(0)
-    
+
+# generazione chiave condivisa
 def gen_message_key():
     global message_key
     global ep_secret_key
@@ -30,111 +32,110 @@ def gen_message_key():
     shk3 = lt_x_secret_key.exchange(ep_pub_key_other_client)
     message_key = concat_KDF(shk1, shk2, shk3)
     
-# update the chat log
+# aggiornamento della finestra della chat
 def update_chat(msg, state):
     global chatlog
 
     chatlog.config(state=NORMAL)
-    # update the message in the window
+    # aggiornamento del messaggio
     if state==0:
         chatlog.insert(END, f'YOU: ' + str(msg))
     else:
         chatlog.insert(END, f'{other_name}: ' + str(msg))
     chatlog.config(state=DISABLED)
-    # show the latest messages
+    # mostra gli ultimi messaggi
     chatlog.yview(END)
 
-# function to send message
+# funzione per l'invio dei messaggi
 def send():    
     # creazione del pacchetto msg: [msg_cifrato, nonce]
     global textbox
-    # get the message
+    # prendo il messaggio
     msg = textbox.get("0.0", END)
+    # prendo la chiave condivisa
     cipher = AES.new(message_key, AES.MODE_EAX)
+    # aggiungo il nonce
     nonce = cipher.nonce
+    # cifro il messaggio
     ciphertext = cipher.encrypt(str(msg).encode('utf-8'))
     c_msg = []
     c_msg.append(ciphertext)
     c_msg.append(nonce)
-    # update the chatlog
-    if mode == "ciphered":
+    # aggiorno la finestra
+    if mode == "ciphered": # voglio vedere i messaggi cifrati
         update_chat(str(c_msg[0])+"\n", 0)
-    else:
-        update_chat(msg, 0)
-    # send the message
+    else: # voglio vedere i messaggi in chiaro
+        update_chat(msg, 0) 
+    # invio il messaggio
     client.send(str(c_msg).encode('utf-8'))
     textbox.delete("0.0", END)
-
     
-# function to receive message
+# funzione per la ricezione dei messaggi
 def receive():
 # Ricezione del mesaggio cifrato dall'altro client con relativa decifratura e stampa
     while 1:
+        # ricevo il messaggio
         msg_pack = ast.literal_eval(client.recv(1024).decode('utf-8'))	          
         nonce = msg_pack[1]
         cipher = AES.new(message_key, AES.MODE_EAX, nonce)
+        # lo decifro
         msg = cipher.decrypt(msg_pack[0])
-        if mode == "ciphered":
+        if mode == "ciphered":  # voglio vedere i messaggi cifrati
             update_chat(str(msg_pack[0]) +"\n", 1)
-        else:
+        else: # voglio vedere i messaggi in chiaro
             update_chat(str(msg,'utf-8'), 1)
 
 def press(event):
     send()
 
-# GUI function
+# Generazione GUI
 def GUI(name):
     global chatlog
     global textbox
-
-    # initialize tkinter object
+    
     gui = Tk()
-    # set title for the window
-    gui.title(f"{name}'s point of view ({mode})")
-    # set size for the window
-    gui.geometry("760x860")
+    # titolo
+    gui.title(f"Chat al punto di vista di {name} ({mode})")
+    # grandezza finestra
+    gui.geometry("800x860")
 
-    # text space to display messages
+    # spazio per il testo
     chatlog = Text(gui, bg='white')
     chatlog.config(state=DISABLED)
 
-    # button to send messages
-    sendbutton = Button(gui, bg='orange', fg='black', text='SEND', command=send)
+    # tasto invio
+    sendbutton = Button(gui, bg='grey', fg='black', text='INVIA', command=send, relief="raised")
 
-    # textbox to type messages
+    # casella scrittura messaggio
     textbox = Text(gui, bg='white')
-
-    # place the components in the window
+    
     chatlog.place(x=6, y=6, height=750, width=700)
     textbox.place(x=6, y=750, height=40, width=700)
     sendbutton.place(x=720, y=750, height=40, width=50)
     
-    # bind textbox to use ENTER Key
+    # ENTER = invia
     textbox.bind("<KeyRelease-Return>", press)
 
-    # create thread to capture messages continuously
+    # inizio il thread per la ricezione dei messaggi
     _thread.start_new_thread(receive, ())
 
-    # to keep the window in loop
+    # mando in loop la finestra
     gui.mainloop()
 
 chatlog = textbox = None
-# initialize socket
+# inizializzo socket
 s = socket(AF_INET, SOCK_STREAM)
-# config details of server
-host = 'localhost'  ## to use between devices in the same network eg.192.168.1.5
+host = 'localhost' # 127.0.0.1, teoricamente è possibile il collegamento fra due dispositivi sulla stessa rete
 port = 8080
-# initialize server
+# inizializzo server
 s.bind((host, port))
-# set no. of clients
 s.listen(1)
-# accept the clientection from client
 client, addr = s.accept()
-# write my name
+# inserisco nickname
 my_name = input("Insert your nickname: ")
-# send my name
+# invio nickname all'altro client
 client.sendall(my_name.encode('utf-8'))
-# receive other client's name
+# ricevo il nickname dell'altro client
 other_name = client.recv(1024).decode('utf-8')
 global names
 names = [my_name,other_name]
