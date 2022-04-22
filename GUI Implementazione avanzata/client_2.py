@@ -19,7 +19,7 @@ if sys.argv[1] == "plain":
 elif sys.argv[1] == "ciphered":
     mode = "ciphered"
 else:
-    print("Mode must be 'plain' or 'ciphered'. Exiting")
+    print("Le modalità devono essere o 'plain' o 'chipered'. Termino l'esecuzione.")
     exit(0)
 
 def gen_message_key():
@@ -38,9 +38,9 @@ def update_chat(msg, state):
     chatlog.config(state=NORMAL)
     # aggiornamento del messaggio
     if state==0:
-        chatlog.insert(END, f'YOU: ' + str(msg))
+        chatlog.insert(END, f'Tu: ' + str(msg).rstrip("\n") + "\n")
     else:
-        chatlog.insert(END, f'{other_name}: ' + str(msg))
+        chatlog.insert(END, f'{other_name}: '  + str(msg).rstrip("\n") + "\n")
     chatlog.config(state=DISABLED)
     # mostra gli ultimi messaggi
     chatlog.yview(END)
@@ -84,7 +84,7 @@ def receive():
         if mode == "ciphered": # voglio vedere i messaggi cifrati
             update_chat(str(msg_pack[0]) +"\n", 1)
         else: # voglio vedere i messaggi in chiaro
-            update_chat(str(msg,'utf-8'), 1)
+            update_chat(str(msg,'utf-8') + "\n", 1)
             
 def press(event):
     send()
@@ -96,7 +96,7 @@ def GUI(name):
 
     gui = Tk()
     # titolo
-    gui.title(f"{name}'s point of view ({mode})")
+    gui.title(f"Chat dal punto di vista di {name} ({mode})")
     # grandezza finestra
     gui.geometry("800x860")
 
@@ -105,7 +105,7 @@ def GUI(name):
     chatlog.config(state=DISABLED)
 
     # tasto invio
-    sendbutton = Button(gui, bg='orange', fg='black', text='SEND', command=send, relief="raised")
+    sendbutton = Button(gui, bg='grey', fg='black', text='INVIA', command=send, relief="raised")
 
     # casella scrittura messaggio
     textbox = Text(gui, bg='white')

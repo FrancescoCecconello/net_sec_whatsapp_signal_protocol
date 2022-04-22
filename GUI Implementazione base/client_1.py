@@ -30,13 +30,12 @@ def gen_message_key():
 # aggiornamento della finestra della chat
 def update_chat(msg, state):
     global chatlog
-
     chatlog.config(state=NORMAL)
     # aggiornamento del messaggio
     if state==0:
-        chatlog.insert(END, f'YOU: ' + str(msg))
+        chatlog.insert(END, f'Tu: ' + msg.rstrip("\n") + "\n")
     else:
-        chatlog.insert(END, f'{other_name}: ' + str(msg))
+        chatlog.insert(END, f'{other_name}: ' + msg.rstrip("\n") + "\n")
     chatlog.config(state=DISABLED)
     # mostra gli ultimi messaggi
     chatlog.yview(END)
@@ -58,9 +57,9 @@ def send():
     c_msg.append(nonce)
     # aggiorno la finestra
     if mode == "ciphered": # voglio vedere i messaggi cifrati
-        update_chat(str(c_msg[0])+"\n", 0)
+        update_chat(str(c_msg[0]), 0)
     else: # voglio vedere i messaggi in chiaro
-        update_chat(msg, 0) 
+        update_chat(str(msg).rstrip("\n"), 0) 
     # invio il messaggio
     client.send(str(c_msg).encode('utf-8'))
     textbox.delete("0.0", END)
@@ -75,11 +74,11 @@ def receive():
         nonce = msg_pack[1]
         cipher = AES.new(message_key, AES.MODE_EAX, nonce)
         # lo decifro
-        msg = cipher.decrypt(msg_pack[0])
+        msg = cipher.decrypt(msg_pack[0]).decode('utf-8')
         if mode == "ciphered":  # voglio vedere i messaggi cifrati
-            update_chat(str(msg_pack[0]) +"\n", 1)
+            update_chat(str(msg_pack[0]), 1)
         else: # voglio vedere i messaggi in chiaro
-            update_chat(str(msg,'utf-8'), 1)
+            update_chat(msg, 1)
 
 def press(event):
     send()
@@ -91,7 +90,7 @@ def GUI(name):
     
     gui = Tk()
     # titolo
-    gui.title(f"Chat al punto di vista di {name} ({mode})")
+    gui.title(f"Chat dal punto di vista di {name} ({mode})")
     # grandezza finestra
     gui.geometry("800x860")
 
