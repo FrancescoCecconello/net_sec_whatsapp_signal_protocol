@@ -1,5 +1,6 @@
 import sys
 from tkinter import *
+from tkinter import ttk
 from socket import *
 import _thread
 import ast
@@ -86,14 +87,14 @@ def GUI(name):
     # set title for the window
     gui.title(f"{name}'s point of view ({mode})")
     # set size for the window
-    gui.geometry("760x860")
+    gui.geometry("800x860")
 
     # text space to display messages
     chatlog = Text(gui, bg='white')
     chatlog.config(state=DISABLED)
 
     # button to send messages
-    sendbutton = Button(gui, bg='orange', fg='black', text='SEND', command=send)
+    sendbutton = Button(gui, bg='orange', fg='black', text='SEND', command=send, relief="raised")
 
     # textbox to type messages
     textbox = Text(gui, bg='white')
@@ -102,7 +103,6 @@ def GUI(name):
     chatlog.place(x=6, y=6, height=750, width=700)
     textbox.place(x=6, y=750, height=40, width=700)
     sendbutton.place(x=720, y=750, height=40, width=50)
-    
     # bind textbox to use ENTER Key
     textbox.bind("<KeyRelease-Return>", press)
 
@@ -118,7 +118,7 @@ chatlog = textbox = None
 client = socket(AF_INET, SOCK_STREAM)
 # config details of server
 host = 'localhost'  ## to use between devices in the same network eg.192.168.1.5
-port = 8087
+port = 8080
 # connect to server
 client.connect((host, port))
 # write my name

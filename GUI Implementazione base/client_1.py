@@ -86,14 +86,14 @@ def GUI(name):
     # set title for the window
     gui.title(f"{name}'s point of view ({mode})")
     # set size for the window
-    gui.geometry("760x860")
+    gui.geometry("800x860")
 
     # text space to display messages
     chatlog = Text(gui, bg='white')
     chatlog.config(state=DISABLED)
 
     # button to send messages
-    sendbutton = Button(gui, bg='orange', fg='black', text='SEND', command=send)
+    sendbutton = Button(gui, bg='orange', fg='black', text='SEND', command=send, relief="raised")
 
     # textbox to type messages
     textbox = Text(gui, bg='white')
@@ -117,7 +117,7 @@ chatlog = textbox = None
 s = socket(AF_INET, SOCK_STREAM)
 # config details of server
 host = 'localhost'  ## to use between devices in the same network eg.192.168.1.5
-port = 8087
+port = 8080
 # initialize server
 s.bind((host, port))
 # set no. of clients
