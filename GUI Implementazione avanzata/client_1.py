@@ -1,8 +1,10 @@
 import sys
 from tkinter import *
+import tkinter as tk
 from socket import *
 import _thread
 import ast
+from datetime import datetime
 from Crypto.Cipher import AES
 from generate_keys import *
 from cryptography.hazmat.primitives import serialization
@@ -35,16 +37,21 @@ def gen_message_key():
 # aggiornamento della finestra della chat
 def update_chat(msg, state):
     global chatlog
-
+    msg = pad(str(msg).rstrip("\n"))+ "\n"
     chatlog.config(state=NORMAL)
     # aggiornamento del messaggio
-    if state==0:
-        chatlog.insert(END, f'Tu: '  + str(msg).rstrip("\n") + "\n")
-    else:
-        chatlog.insert(END, f'{other_name}: '  + str(msg).rstrip("\n") + "\n")
-    chatlog.config(state=DISABLED)
-    # mostra gli ultimi messaggi
-    chatlog.yview(END)
+    current_time = datetime.now().strftime("%H:%M")
+    if msg != "":
+        if state==0:            
+            chatlog.insert(END,current_time + " "*(chars_per_line + 8) + "\n","my_time")
+            chatlog.insert(END, msg,"me")
+        else:
+            chatlog.insert(END, current_time + "\n","other_time")
+            chatlog.insert(END,msg,"other")
+            
+        chatlog.config(state=DISABLED)
+        # mostra gli ultimi messaggi
+        chatlog.yview(END)
 
 # funzione per l'invio dei messaggi
 def send():    
@@ -70,6 +77,7 @@ def send():
     client.send(str(c_msg).encode('utf-8'))
     textbox.delete("0.0", END)
     
+    
 # funzione per la ricezione dei messaggi
 def receive():
 # Ricezione del mesaggio cifrato dall'altro client con relativa decifratura e stampa
@@ -84,7 +92,7 @@ def receive():
             update_chat(str(msg_pack[0]) +"\n", 1)
         else: # voglio vedere i messaggi in chiaro
             update_chat(str(msg,'utf-8') + "\n", 1)
-
+        
 def press(event):
     send()
 
@@ -100,15 +108,19 @@ def GUI(name):
     gui.geometry("800x860")
 
     # spazio per il testo
-    chatlog = Text(gui, bg='white')
+    chatlog = tk.Text(gui, bg='white')
     chatlog.config(state=DISABLED)
+    chatlog.pack()
+    chatlog.tag_config('me',foreground="green",justify='right',font="Consolas 10 bold")
+    chatlog.tag_config('other', foreground="royalblue",font="Consolas 10 bold")
+    chatlog.tag_config('my_time', foreground="green",justify='right',font="Consolas 7 bold")
+    chatlog.tag_config('other_time', foreground="royalblue",justify='left',font="Consolas 7 bold")
 
     # tasto invio
     sendbutton = Button(gui, bg='grey', fg='black', text='INVIA', command=send, relief="raised")
 
     # casella scrittura messaggio
-    textbox = Text(gui, bg='white')
-    
+    textbox = Text(gui, bg='white')    
     chatlog.place(x=6, y=6, height=750, width=700)
     textbox.place(x=6, y=750, height=40, width=700)
     sendbutton.place(x=720, y=750, height=40, width=50)
@@ -122,6 +134,23 @@ def GUI(name):
     # mando in loop la finestra
     gui.mainloop()
 
+def pad(msg):
+    final_msg = ""
+    line = ""
+    ctr = 0
+    for char in msg:
+        if ctr == chars_per_line:
+            final_msg += line + "\n"
+            ctr = 0
+            line = ""
+        line += char
+        ctr += 1
+    if len(line) < chars_per_line:
+        final_msg += " " * (chars_per_line - len(line))
+    if len(msg) < chars_per_line:
+        final_msg = msg + " " * (chars_per_line - len(msg))     
+    return final_msg 
+
 chatlog = textbox = None
 # inizializzo socket
 s = socket(AF_INET, SOCK_STREAM)
@@ -132,7 +161,7 @@ s.bind((host, port))
 s.listen(1)
 client, addr = s.accept()
 # inserisco nickname
-my_name = input("Insert your nickname: ")
+my_name = input("Inserisci il tuo nome: ")
 # invio nickname all'altro client
 client.sendall(my_name.encode('utf-8'))
 # ricevo il nickname dell'altro client
@@ -201,4 +230,5 @@ except InvalidSignature:
 
 gen_message_key()
 del ep_secret_key
+chars_per_line = 40
 GUI(my_name)
