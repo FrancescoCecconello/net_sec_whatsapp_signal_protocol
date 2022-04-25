@@ -36,22 +36,24 @@ def gen_message_key():
 # aggiornamento della finestra della chat
 def update_chat(msg, state):
     global chatlog
-    msg = pad(str(msg).rstrip("\n"))+ "\n"
+    if state == 0:
+        msg = fix_text(str(msg).rstrip("\n"),"right")+ "\n"
+    else:
+        msg = fix_text(str(msg).rstrip("\n"))+ "\n"
     chatlog.config(state=NORMAL)
     # aggiornamento del messaggio
     current_time = datetime.now().strftime("%H:%M")
     if msg != "":
         if state==0:            
             chatlog.insert(END,current_time + " "*(chars_per_line + 8) + "\n","my_time")
-            chatlog.insert(END, msg,"me")
+            chatlog.insert(END, msg +"\n","me")
         else:
             chatlog.insert(END, current_time + "\n","other_time")
-            chatlog.insert(END,msg,"other")
+            chatlog.insert(END,msg +"\n","other")
             
         chatlog.config(state=DISABLED)
         # mostra gli ultimi messaggi
         chatlog.yview(END)
-
 
 
 # funzione per l'invio dei messaggi
@@ -84,7 +86,7 @@ def receive():
 # Ricezione del mesaggio cifrato dall'altro client con relativa decifratura e stampa
     while 1:
         # ricevo il messaggio        
-        msg_pack = ast.literal_eval(client.recv(1024).decode('utf-8'))	          
+        msg_pack = ast.literal_eval(client.recv(8192).decode('utf-8'))	          
         nonce = msg_pack[1]
         cipher = AES.new(message_key, AES.MODE_EAX, nonce)
         # lo decifro
@@ -135,23 +137,24 @@ def GUI(name):
     # mando in loop la finestra
     gui.mainloop()
 
-def pad(msg):
-    final_msg = ""
-    line = ""
-    ctr = 0
-    for char in msg:
-        if ctr == chars_per_line:
-            final_msg += line + "\n"
-            ctr = 0
-            line = ""
-        line += char
-        ctr += 1
-    if len(line) < chars_per_line:
-        final_msg += " " * (chars_per_line - len(line))
-    if len(msg) < chars_per_line:
-        final_msg = msg + " " * (chars_per_line - len(msg))     
-    return final_msg       
+def fix_text(msg,alignment="left"):
+    f = ""
+    for i in range(len(msg)):
+        if i%chars_per_line == 0:
+            if i!= 0:
+                f += "\n"
+            f += msg[i]
+        else:
+            f += msg[i]
+    if alignment == "right":
+        return pad(f)
+    return f
 
+def pad(txt):
+    t = txt.split("\n")
+    t[-1] = t[-1] + " "*(chars_per_line-len(t[-1]))
+    return "\n".join(t)
+    
 chatlog = textbox = None
 # inizializzo socket
 client = socket(AF_INET, SOCK_STREAM)
@@ -162,14 +165,14 @@ client.connect((host, port))
 # inserisco nickname
 my_name = input("Inserisci il tuo nome: ")
 # ricevo il nickname dell'altro client
-other_name = client.recv(1024).decode('utf-8')
+other_name = client.recv(8192).decode('utf-8')
 global names
 names = [my_name,other_name]
 # invio nickname all'altro client
 client.sendall(my_name.encode('utf-8'))
 
 # ricevo il pacchetto di chiavi dall'altro client
-key_pack = ast.literal_eval(client.recv(1024).decode('utf-8'))
+key_pack = ast.literal_eval(client.recv(8192).decode('utf-8'))
 global lt_pub_key_other_client
 global ep_pub_key_other_client
 
