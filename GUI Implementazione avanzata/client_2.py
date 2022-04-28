@@ -86,7 +86,11 @@ def receive():
 # Ricezione del mesaggio cifrato dall'altro client con relativa decifratura e stampa
     while 1:
         # ricevo il messaggio        
-        msg_pack = ast.literal_eval(client.recv(8192).decode('utf-8'))	          
+        try:
+            msg_pack = ast.literal_eval(client.recv(8192).decode('utf-8'))	          
+        except:
+            print("Chat terminata dall'altro client.")
+            exit(0)
         nonce = msg_pack[1]
         cipher = AES.new(message_key, AES.MODE_EAX, nonce)
         # lo decifro

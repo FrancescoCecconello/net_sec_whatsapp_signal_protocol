@@ -32,21 +32,26 @@ def gen_message_key():
 # aggiornamento della finestra della chat
 def update_chat(msg, state):
     global chatlog
-    msg = pad(str(msg).rstrip("\n"))+ "\n"
+    if state == 0:
+        msg = fix_text(str(msg).rstrip("\n"),"right")+ "\n"
+    else:
+        msg = fix_text(str(msg).rstrip("\n"))+ "\n"
     chatlog.config(state=NORMAL)
     # aggiornamento del messaggio
     current_time = datetime.now().strftime("%H:%M")
     if msg != "":
         if state==0:            
             chatlog.insert(END,current_time + " "*(chars_per_line + 8) + "\n","my_time")
-            chatlog.insert(END, msg,"me")
+            chatlog.insert(END, msg +"\n","me")
         else:
             chatlog.insert(END, current_time + "\n","other_time")
-            chatlog.insert(END,msg,"other")
+            chatlog.insert(END,msg +"\n","other")
             
         chatlog.config(state=DISABLED)
         # mostra gli ultimi messaggi
         chatlog.yview(END)
+
+
 
 # funzione per l'invio dei messaggi
 def send():    
@@ -56,7 +61,7 @@ def send():
     msg = textbox.get("0.0", END)
     # prendo la chiave condivisa
     cipher = AES.new(message_key, AES.MODE_EAX)
-    # aggiungo il nonce
+    # aggiungo il nonce  
     nonce = cipher.nonce
     # cifro il messaggio
     ciphertext = cipher.encrypt(str(msg).encode('utf-8'))
@@ -65,9 +70,9 @@ def send():
     c_msg.append(nonce)
     # aggiorno la finestra
     if mode == "ciphered": # voglio vedere i messaggi cifrati
-        update_chat(str(c_msg[0]), 0)
+        update_chat(str(c_msg[0])+"\n", 0)
     else: # voglio vedere i messaggi in chiaro
-        update_chat(str(msg).rstrip("\n"), 0) 
+        update_chat(msg, 0)
     # invio il messaggio
     client.send(str(c_msg).encode('utf-8'))
     textbox.delete("0.0", END)
@@ -77,17 +82,21 @@ def send():
 def receive():
 # Ricezione del mesaggio cifrato dall'altro client con relativa decifratura e stampa
     while 1:
-        # ricevo il messaggio
-        msg_pack = ast.literal_eval(client.recv(1024).decode('utf-8'))	          
+        # ricevo il messaggio        
+        try:
+            msg_pack = ast.literal_eval(client.recv(8192).decode('utf-8'))	          
+        except:
+            print("Chat terminata dall'altro client.")
+            exit(0)
         nonce = msg_pack[1]
         cipher = AES.new(message_key, AES.MODE_EAX, nonce)
         # lo decifro
-        msg = cipher.decrypt(msg_pack[0]).decode('utf-8')
-        if mode == "ciphered":  # voglio vedere i messaggi cifrati
-            update_chat(str(msg_pack[0]), 1)
+        msg = cipher.decrypt(msg_pack[0])
+        if mode == "ciphered": # voglio vedere i messaggi cifrati
+            update_chat(str(msg_pack[0]) +"\n", 1)
         else: # voglio vedere i messaggi in chiaro
-            update_chat(msg, 1)
-
+            update_chat(str(msg,'utf-8') + "\n", 1)
+            
 def press(event):
     send()
 
@@ -95,7 +104,7 @@ def press(event):
 def GUI(name):
     global chatlog
     global textbox
-    
+
     gui = Tk()
     # titolo
     gui.title(f"Chat dal punto di vista di {name} ({mode})")
@@ -110,12 +119,12 @@ def GUI(name):
     chatlog.tag_config('other', foreground="royalblue",font="Consolas 10 bold")
     chatlog.tag_config('my_time', foreground="green",justify='right',font="Consolas 7 bold")
     chatlog.tag_config('other_time', foreground="royalblue",justify='left',font="Consolas 7 bold")
-
     # tasto invio
     sendbutton = Button(gui, bg='grey', fg='black', text='INVIA', command=send, relief="raised")
 
     # casella scrittura messaggio
-    textbox = Text(gui, bg='white')    
+    textbox = Text(gui, bg='white')
+    
     chatlog.place(x=6, y=6, height=750, width=700)
     textbox.place(x=6, y=750, height=40, width=700)
     sendbutton.place(x=720, y=750, height=40, width=50)
@@ -129,22 +138,23 @@ def GUI(name):
     # mando in loop la finestra
     gui.mainloop()
 
-def pad(msg):
-    final_msg = ""
-    line = ""
-    ctr = 0
-    for char in msg:
-        if ctr == chars_per_line:
-            final_msg += line + "\n"
-            ctr = 0
-            line = ""
-        line += char
-        ctr += 1
-    if len(line) < chars_per_line:
-        final_msg += " " * (chars_per_line - len(line))
-    if len(msg) < chars_per_line:
-        final_msg = msg + " " * (chars_per_line - len(msg))     
-    return final_msg 
+def fix_text(msg,alignment="left"):
+    f = ""
+    for i in range(len(msg)):
+        if i%chars_per_line == 0:
+            if i!= 0:
+                f += "\n"
+            f += msg[i]
+        else:
+            f += msg[i]
+    if alignment == "right":
+        return pad(f)
+    return f
+
+def pad(txt):
+    t = txt.split("\n")
+    t[-1] = t[-1] + " "*(chars_per_line-len(t[-1]))
+    return "\n".join(t)
     
 chatlog = textbox = None
 # inizializzo socket
