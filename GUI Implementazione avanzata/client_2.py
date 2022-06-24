@@ -16,13 +16,19 @@ from cryptography.exceptions import InvalidSignature
 
 # scelgo se leggere i messaggi in chiaro o cifrati
 global mode
-if sys.argv[1] == "plain":
-    mode = "plain"
-elif sys.argv[1] == "ciphered":
-    mode = "ciphered"
+if len(sys.argv) != 1:    
+    if sys.argv[1] == "plain":
+        mode = "plain"
+        print("Mostrerò il testo delle chat in chiaro.")
+    elif sys.argv[1] == "ciphered":
+        mode = "ciphered"
+        print("Mostrerò il testo delle chat criptato.")
+    else:
+        print(f"La modalità deve essere 'plain' o 'ciphered', non {sys.argv[1]}.")
+        exit(0)
 else:
-    print("Le modalità devono essere o 'plain' o 'chipered'. Termino l'esecuzione.")
-    exit(0)
+    print("Mostrerò il testo delle chat in chiaro.")
+    mode = "plain"
 
 def gen_message_key():
     global message_key

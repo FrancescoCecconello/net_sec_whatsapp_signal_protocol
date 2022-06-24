@@ -119,7 +119,6 @@ try:
 		                s_chat.write(nickname + ' ha ricevuto le chiavi pubbliche di ' + nicknames[1] + ' e può calcolare il segreto condiviso:\n' + str(message_key) + '\n\n')
 		                s_chat.write(nickname + ' ha cancellato la chiave segreta effimera ' + str(ep_secret_key) + '.\n\n')
 		                del ep_secret_key
-		                print(ep_secret_key)
 		                s_chat.close()
 		            else:
 		                secret_chat2 = 'secret_chat_' + nickname +'.txt'
