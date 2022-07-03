@@ -68,9 +68,9 @@ In entrambe le directory GUI_* è contenuto il codice per simulare una chat fra 
 
 1) Aprire due finestre del terminale nella cartella GUI ed esegui il primo comando in una finestra e poi il secondo comando nell'altra:
 ```
-python client_1.py plain
+python client_1.py 
 
-python client_2.py plain
+python client_2.py 
 
 ```
 
